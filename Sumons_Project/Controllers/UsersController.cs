@@ -1,4 +1,4 @@
-﻿using BJProduction.Models;
+﻿using BillingRegister.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -13,7 +13,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Collections;
 
-namespace BJProduction.Controllers
+namespace BillingRegister.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller

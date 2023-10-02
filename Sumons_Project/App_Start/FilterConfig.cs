@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace BJProduction
+namespace BillingRegister
 {
     public class FilterConfig
     {

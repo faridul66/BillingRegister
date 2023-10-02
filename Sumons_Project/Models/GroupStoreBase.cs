@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace BJProduction.Models
+namespace BillingRegister.Models
 {
     public class GroupStoreBase
     {

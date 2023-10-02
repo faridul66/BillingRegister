@@ -4,8 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>\\bjm06\Sticker</_PublishTargetUrl>
-    <History>True|2023-03-07T04:10:44.6665656Z;True|2023-03-06T18:57:09.9007875+06:00;True|2023-03-02T12:03:32.8649807+06:00;True|2023-03-02T11:32:52.8911596+06:00;True|2023-03-02T11:31:17.6742812+06:00;True|2023-03-01T23:58:25.1176162+06:00;True|2023-03-01T13:23:43.3476660+06:00;True|2023-02-28T15:06:49.1897658+06:00;True|2023-02-28T12:35:21.2157342+06:00;True|2023-02-28T12:31:56.9399454+06:00;True|2023-02-26T14:09:42.9285603+06:00;True|2023-02-22T19:11:39.2276494+06:00;True|2023-01-17T12:55:04.4331592+06:00;True|2023-01-16T09:40:03.5605846+06:00;False|2023-01-16T09:38:16.0560299+06:00;False|2023-01-16T09:37:49.7612899+06:00;True|2023-01-15T17:57:04.0532259+06:00;True|2023-01-15T16:55:18.1332831+06:00;</History>
+    <_PublishTargetUrl>\\182.160.114.21\Sticker</_PublishTargetUrl>
+    <History>True|2023-03-08T16:53:05.3767226Z;True|2023-03-08T14:27:25.7325835+06:00;True|2023-03-08T14:23:39.8313107+06:00;True|2023-03-08T14:22:46.8410028+06:00;True|2023-03-08T14:20:30.3426297+06:00;True|2023-03-08T14:14:58.6119209+06:00;True|2023-03-08T14:10:19.0857774+06:00;True|2023-03-07T10:10:44.6665656+06:00;True|2023-03-06T18:57:09.9007875+06:00;True|2023-03-02T12:03:32.8649807+06:00;True|2023-03-02T11:32:52.8911596+06:00;True|2023-03-02T11:31:17.6742812+06:00;True|2023-03-01T23:58:25.1176162+06:00;True|2023-03-01T13:23:43.3476660+06:00;True|2023-02-28T15:06:49.1897658+06:00;True|2023-02-28T12:35:21.2157342+06:00;True|2023-02-28T12:31:56.9399454+06:00;True|2023-02-26T14:09:42.9285603+06:00;True|2023-02-22T19:11:39.2276494+06:00;True|2023-01-17T12:55:04.4331592+06:00;True|2023-01-16T09:40:03.5605846+06:00;False|2023-01-16T09:38:16.0560299+06:00;False|2023-01-16T09:37:49.7612899+06:00;True|2023-01-15T17:57:04.0532259+06:00;True|2023-01-15T16:55:18.1332831+06:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -16,10 +16,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/08/2017 08:56:44</publishTime>
     </File>
     <File Include="bin/BJProdASN.dll">
-      <publishTime>03/07/2023 20:08:10</publishTime>
+      <publishTime>03/09/2023 01:30:49</publishTime>
     </File>
     <File Include="bin/BJProdASN.pdb">
-      <publishTime>03/07/2023 20:08:10</publishTime>
+      <publishTime>03/09/2023 01:30:49</publishTime>
     </File>
     <File Include="bin/Content/bootstrap-grid.css">
       <publishTime>11/06/2022 13:15:45</publishTime>
@@ -304,7 +304,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/05/2022 01:17:24</publishTime>
     </File>
     <File Include="bin/Web.config">
-      <publishTime>03/07/2023 10:09:38</publishTime>
+      <publishTime>03/09/2023 01:30:50</publishTime>
     </File>
     <File Include="bin/Web.Debug.config">
       <publishTime>11/23/2019 16:00:02</publishTime>
@@ -726,14 +726,17 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Content/font-awesome.css">
       <publishTime>12/04/2022 11:18:03</publishTime>
     </File>
+    <File Include="Content/Ping.css">
+      <publishTime>03/09/2023 01:23:43</publishTime>
+    </File>
     <File Include="Content/SMN.css">
-      <publishTime>12/05/2022 16:50:43</publishTime>
+      <publishTime>03/08/2023 13:50:14</publishTime>
     </File>
     <File Include="Content/Theme/assets/css/base.css">
       <publishTime>12/07/2022 14:36:22</publishTime>
     </File>
     <File Include="Content/Theme/assets/css/base.min.css">
-      <publishTime>03/02/2023 00:29:30</publishTime>
+      <publishTime>03/09/2023 01:29:37</publishTime>
     </File>
     <File Include="Content/Theme/assets/fonts/fontawesome/fa-brands-400.eot">
       <publishTime>11/06/2022 13:38:23</publishTime>
@@ -2698,7 +2701,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/07/2023 02:01:42</publishTime>
     </File>
     <File Include="Views/Production_Indent/Index.cshtml">
-      <publishTime>03/07/2023 20:35:45</publishTime>
+      <publishTime>03/08/2023 12:46:35</publishTime>
     </File>
     <File Include="Views/Production_Ledger/Create.cshtml">
       <publishTime>11/10/2022 10:23:41</publishTime>
@@ -2947,7 +2950,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/05/2022 02:43:00</publishTime>
     </File>
     <File Include="Views/Shared/index.cshtml">
-      <publishTime>03/07/2023 11:10:54</publishTime>
+      <publishTime>03/09/2023 01:23:53</publishTime>
     </File>
     <File Include="Views/Shared/index_BAK.cshtml">
       <publishTime>11/08/2021 09:31:29</publishTime>
@@ -3166,7 +3169,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/16/2019 15:30:44</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/07/2023 10:09:38</publishTime>
+      <publishTime>03/09/2023 01:30:50</publishTime>
     </File>
   </ItemGroup>
 </Project>

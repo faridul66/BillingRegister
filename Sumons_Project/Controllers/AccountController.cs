@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using BJProduction.Models;
+using BillingRegister.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace BJProduction.Controllers
+namespace BillingRegister.Controllers
 {
   
     public class AccountController : Controller

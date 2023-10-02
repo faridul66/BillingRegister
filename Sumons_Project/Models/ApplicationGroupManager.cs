@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 
-namespace BJProduction.Models
+namespace BillingRegister.Models
 {
     public class ApplicationGroupManager
     {

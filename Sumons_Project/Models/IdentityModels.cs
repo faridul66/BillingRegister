@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
-namespace BJProduction.Models
+namespace BillingRegister.Models
 {
     // You will not likely need to customize there, but it is necessary/easier to create our own 
     // project-specific implementations, so here they are:
@@ -67,7 +67,7 @@ namespace BJProduction.Models
         string, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
         public ApplicationDbContext()
-            : base("BJ_Production")
+            : base("BillingRegister")
         {
         }
 
@@ -117,100 +117,34 @@ namespace BJProduction.Models
 
         }
 
-        //public DbSet<AssignBranch> AssignBranches { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Company> Companies { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Location_Type> Location_Type { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Location> Locations { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Vendor> Vendors { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Customer> Customers { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Machine> Machines { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Machine_Type> Machine_Type { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Transaction_Type> Transaction_Type { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Product> Products { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Product_Type> Product_Type { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Feature> Features { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Feature_Type> Feature_Type { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Unit_Measurement> Unit_Measurement { get; set; }
-
-      
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Machine_Product> Machine_Product { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Sales_Order> Sales_Order { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Sales_Ledger> Sales_Ledger { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Purchase_Order> Purchase_Order { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Purchase_Ledger> Purchase_Ledger { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Production_Indent> Production_Indent { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Shift> Shifts { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Shift_End> Shift_End { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Consumption_Ledger> Consumption_Ledger { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Production_Ledger> Production_Ledger { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Other_Type> Other_Type { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Other_Consumption> Other_Consumption { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Other_Consumption_Ledger> Other_Consumption_Ledger { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Transfer_Ledger> Transfer_Ledger { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.General_Ledger> General_Ledger { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.ProductType_FeatureType> ProductType_FeatureType { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Product_Feature> Product_Feature { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Transfer_Order> Transfer_Order { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Company_Location> Company_Location { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Feature_UnitMeasurement> Feature_UnitMeasurement { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Return_Order> Return_Order { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Return_Ledger> Return_Ledger { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Product_Indent_Feature> Product_Indent_Feature { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Temp_Feature> Temp_Feature { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.Residuals> Residuals { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.TransferProductFeatures> TransferProductFeatures { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.TransferOrderExt> TransferOrderExts { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.SalesProductFeatures> SalesProductFeatures { get; set; }
-
-        public System.Data.Entity.DbSet<BJProduction.Models.SalesOrderProductFeature> SalesOrderProductFeatures { get; set; }
- public System.Data.Entity.DbSet<BJProduction.Models.SalesOrderExt> SalesOrderExts { get; set; }
 
 
 
 
 
-        //public System.Data.Entity.DbSet<BJProduction.Models.Site> Sites { get; set; }
+
+        //public System.Data.Entity.DbSet<BillingRegister.Models.Site> Sites { get; set; }
+
+    }
+
+    public class ApplicationDbContextBilling
+: IdentityDbContext<ApplicationUser, ApplicationRole,
+string, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
+    {
+        public ApplicationDbContextBilling()
+            : base("DynamicsERPForBilling")
+        {
+        }
+
+        //static ApplicationDbContext()
+        //{
+        //    Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
+        //}
+
+        public static ApplicationDbContextBilling Create()
+        {
+            return new ApplicationDbContextBilling();
+        }
 
     }
 
@@ -236,7 +170,7 @@ namespace BJProduction.Models
     //    public DbSet<AssignBranch> AssignBranches { get; set; }
     //    // Add the ApplicationGroups property:
 
-    //    //public System.Data.Entity.DbSet<BJProduction.Models.Site> Sites { get; set; }
+    //    //public System.Data.Entity.DbSet<BillingRegister.Models.Site> Sites { get; set; }
 
     //}
 

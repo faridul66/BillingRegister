@@ -1,0 +1,218 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/index.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://kendo.cdn.telerik.com/themes/6.2.0/default/default-main.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.6.1.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.1.117/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: black;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Add padding to containers */
+        .container {
+            padding: 16px;
+            background-color: white;
+        }
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+            input[type=text]:focus, input[type=password]:focus {
+                background-color: #ddd;
+                outline: none;
+            }
+
+        /* Overwrite default styles of hr */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        /* Set a style for the submit button */
+        .registerbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+            .registerbtn:hover {
+                opacity: 1;
+            }
+
+        /* Add a blue text color to links */
+        a {
+            color: dodgerblue;
+        }
+
+        /* Set a grey background color and center the text of the "sign in" section */
+        .signin {
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+
+        .k-readonly {
+            color: gray;
+        }
+
+        .selected-value {
+            display: inline-block;
+            vertical-align: middle;
+            width: 240px;
+            height: 24px;
+            background-size: 100%;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+
+        #CompanyName-list .k-list-item-text {
+            line-height: 1em;
+            min-width: 300px;
+        }
+
+        .k-list-scroller {
+            overflow-y: scroll;
+            width: 290px;
+        }
+
+
+        #CompanyName-list .k-list-item-text > span:first-child {
+            -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            margin: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+        .k-no-data {
+            display: table;
+            width: 100%;
+            padding-top: 20px;
+        }
+
+        .k-dropdown-wrap {
+            height: 35px;
+        }
+
+            .k-dropdown-wrap:hover {
+                color: #2e2e2e;
+            }
+
+        span.k-icon.k-i-arrow-60-down {
+            margin-top: 10px;
+        }
+
+        .k-expander-title {
+            color: white;
+        }
+
+        .k-expander-header {
+            color: #424242;
+            background-color: yellowgreen;
+        }
+
+            .k-expander-header:hover {
+                color: #424242;
+                background-color: yellowgreen;
+            }
+
+        span.k-icon k-clear-value k-i-close {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="ex1">
+        <div class="row">
+            <div class="col-md-4">
+                <label><b>Employee Name</b></label><br />
+                <input style="height: 30px; width: 100%;" id="ddlemployeeName">
+            </div>
+            <div class="col-md-4">
+                <label><b>Item Name</b></label><br />
+                <input class="kcombo" style="height: 30px; width: 100%;" id="ddlItemName">
+            </div>
+            <div class="col-md-4">
+                <label><b>Qty</b></label><br />
+                <input style="height: 30px; width: 100%;" id="ItemQty">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label><b>Unit Price</b></label><br />
+                <input style="height: 30px; width: 100%;" id="unitprice">
+            </div>
+            <div class="col-md-3">
+                <label><b>Discount</b></label><br />
+                <input style="height: 30px; width: 100%;" id="discount">
+            </div>
+            <div class="col-md-3">
+                <label><b>Number of Installment</b></label><br />
+                <input style="height: 30px; width: 100%;" id="NoInstall">
+            </div>
+            <div class="col-md-3">
+                <label><b>Installment Amount</b></label><br />
+                <input style="height: 30px; width: 100%;" id="installamt">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label><b>Total Amount</b></label><br />
+                <input style="height: 30px; width: 100%;" id="totalamount">
+            </div>
+            <div class="col-md-3">
+                <label><b>Supervisor</b></label><br />
+                <input class="kcombo" style="height: 30px; width: 100%;" id="ddlsupervisor">
+            </div>
+            <div class="col-md-3">
+                <label><b>Start Month</b></label><br />
+                <input style="height: 30px; width: 100%;" id="starmonth">
+            </div>
+            <div class="col-md-3">
+                <label><b>End Month</b></label><br />
+                <input style="height: 30px; width: 100%;" id="Endmonth">
+            </div>
+        </div>
+        <span id="Id" style="display:none"></span>
+        <br />
+        <div class="col-md-12" style="text-align:end">
+            <button type="submit" class="btn btn-success" onclick="Save()">Save</button>
+        </div>
+    </div>
+    <script>
+        $('#ex1').kendoExpansionPanel({
+            title: 'In House Purchase',
+            expanded: true
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,568 @@
+﻿
+@{
+    ViewBag.Title = "CreateBillingRegisterList";
+    Layout = "~/Views/Shared/index.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://kendo.cdn.telerik.com/themes/6.2.0/default/default-main.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.6.1.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.1.117/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: black;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Add padding to containers */
+        .container {
+            padding: 16px;
+            background-color: white;
+        }
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+            input[type=text]:focus, input[type=password]:focus {
+                background-color: #ddd;
+                outline: none;
+            }
+
+        /* Overwrite default styles of hr */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        /* Set a style for the submit button */
+        .registerbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+            .registerbtn:hover {
+                opacity: 1;
+            }
+
+        /* Add a blue text color to links */
+        a {
+            color: dodgerblue;
+        }
+
+        /* Set a grey background color and center the text of the "sign in" section */
+        .signin {
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+
+        .k-readonly {
+            color: gray;
+        }
+
+        .selected-value {
+            display: inline-block;
+            vertical-align: middle;
+            width: 240px;
+            height: 24px;
+            background-size: 100%;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+
+        #CompanyName-list .k-list-item-text {
+            line-height: 1em;
+            min-width: 300px;
+        }
+
+        .k-list-scroller {
+            overflow-y: scroll;
+            width: 290px;
+        }
+
+
+        #CompanyName-list .k-list-item-text > span:first-child {
+            -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+            margin: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+        .k-no-data {
+            display: table;
+            width: 100%;
+            padding-top: 20px;
+        }
+
+        .k-dropdown-wrap {
+            height: 35px;
+        }
+
+            .k-dropdown-wrap:hover {
+                color: #2e2e2e;
+                
+            }
+
+        span.k-icon.k-i-arrow-60-down {
+            margin-top: 10px;
+        }
+
+        .k-expander-title {
+            color: white;
+        }
+
+        .k-expander-header {
+            color: #424242;
+            background-color: yellowgreen;
+        }
+
+            .k-expander-header:hover {
+                color: #424242;
+                background-color: yellowgreen;
+            }
+
+        #gridBilling .k-grid-content {
+            min-height: 100px;
+            max-height: 400px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="ex1">
+        @if (Request.IsAuthenticated && User.IsInRole("Payment Section"))
+        {
+            <div class="col-md-4">
+                <label><b>Bill Amount</b></label><br />
+                <input style="height: 30px; width: 100%;" id="paymentAmount">
+            </div>
+            <div id="Payment">
+                <div class="col-md-5" style="text-align:end">
+                    <button type="submit" class="btn btn-success" onclick="Complete()">Payment</button>
+                </div>
+            </div>
+        }
+        else if (Request.IsAuthenticated && User.IsInRole("Receive Section"))
+        {
+            <div id="Receive">
+                <div class="col-md-4">
+                    <label><b>Send To</b></label><br />
+                    <input style="height: 30px; width: 100%;" id="ddlUserName">
+                </div>
+                <div class="col-md-4">
+                    <label><b>Invoice No</b></label><br />
+                    <input style="height: 30px; width: 100%;" id="InvoiceNo">
+                </div>
+                <div class="col-md-12" style="text-align:end">
+                    <button type="submit" class="btn btn-success" onclick="Invoice()">Invoice</button>
+                    <button type="submit" class="btn btn-success" onclick="Send()">Send</button>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div id="hideuser">
+                <div class="col-md-4">
+                    <label><b>Send To</b></label><br />
+                    <input style="height: 30px; width: 100%;" id="ddlUserName">
+                </div>
+                <div class="col-md-5" style="text-align:end">
+                    <button type="submit" class="btn btn-success" onclick="Send()">Send</button>
+                </div>
+            </div>
+
+        }
+        <label style="display:none"><span id="hiddenrole"></span></label>
+        <br />
+        <div id="gridBilling">
+
+        </div>
+
+    </div>
+    <script>
+        $('#ex1').kendoExpansionPanel({
+            title: 'Billing Register List',
+            expanded: true
+        });
+    </script>
+</body>
+</html>
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            GetAllData();
+        })
+        var BillingRegisterData = [];
+        var UserList = [];
+        var TransList = [];
+        function GetAllData() {
+            $.ajax({
+                /*url: '/BillingRegisterList/GetAllDropdownData',*/
+                url: '@Url.Action("GetAllDropdownData", "BillingRegisterList")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(null),
+                success: function (Data) {
+                    ResultArray = JSON.parse(Data);
+                    BillingRegisterData = ResultArray.BillingRegisterData;
+                    if (BillingRegisterData.length > 0) {
+                        UserList = ResultArray.UserList;
+                        BillingRegisterInfo();
+                        LoadUser();
+                        $("#hiddenrole").html(ResultArray.role)
+                    }
+                    else {
+                        $("#hideuser").hide();
+                        Swal.fire('Data Not Found', '', 'warning');
+                    }
+                },
+                error: function (xhr) {
+                    toastr.warning("Data Not Found");
+                }
+            });
+        }
+        function LoadUser() {
+            $("#ddlUserName").kendoComboBox({
+                autoBind: false,
+                placeholder: "select User",
+                dataTextField: "CustName",
+                dataValueField: "CustName",
+                dataSource: UserList,
+                filter: "contains",
+                suggest: true,
+                index: -1,
+            });
+        }
+        function BillingRegisterInfo() {
+            $("#gridBilling").kendoGrid({
+                dataSource: {
+                    data: BillingRegisterData,
+                    schema: {
+                        model: {
+                            Id: "Id",
+                        }
+                    }
+                },
+                scrollable: {
+                    virtual: "columns"
+                },
+                width: 1000,
+                
+                sortable: true,
+                columnMenu: {
+                    componentType: "modern",
+                    columns: {
+                        sort: "asc",
+                        groups: [
+                            { columns: ["BillAmount"] },
+                            { title: "Amount", columns: ["BillAmount", "PaymentAmount"] }
+                        ]
+                    }
+                },
+                reorderable: true,
+                resizable: true,
+                columns: [
+                    {
+                        field: "Id", title: "Sl", width: 50
+                    },
+                    {
+                        field: "EntryNo", stickable: true, title: "Entry No", width: 110
+                    },
+                    {
+                        template: "<div style='display:flex'><input type='checkbox'  id='selectVal_#:Id#' onclick='SendToAccounts(\"#:Id#\")'><button style='margin-left:5px' class='k-button success' onclick='Return(\"#:Id#\",\"Receive\")'>Receive</button><button style='margin-left:5px' class='k-button success' onclick='Return(\"#:Id#\",\"Return\")'>Return</button></div>",
+                        title: "Action",
+                        width: 110
+                    },
+                    {
+                        field: "Status", stickable: true, title: "Status", width: 90
+                    },
+                    {
+                        field: "CompanyName", stickable: true, title: "Company Name", width: 220
+                    },
+                    {
+                        field: "CustomerName", stickable: true, title: "Customer Name", width: 210
+                    },
+                    {
+                        field: "BillAmount", stickable: true, title: "BillAmount", width: 150
+                    },
+                    {
+                        field: "PaymentAmount", stickable: true, title: "PaymentAmount",
+                        template: '<a href="" style="color:blue;text-decoration:underline" onclick="TransactionDetails(\'#: Id #\')">#: PaymentAmount #</a>',
+                        width: 150
+                    },
+                    {
+                        field: "InvoiceNo", stickable: true, title: "Invoice No", width: 120
+                    },
+
+
+                    {
+                        field: "EntryDate", stickable: true, title: "Entry Date", width: 110,
+                        template: "#= kendo.toString(kendo.parseDate(EntryDate, 'yyyy-MM-dd'), 'MM/dd/yyyy') #"
+                    },
+                    {
+                        field: "BillDate", stickable: true, title: "Bill Date", width: 110,
+                        template: "#= kendo.toString(kendo.parseDate(BillDate, 'yyyy-MM-dd'), 'MM/dd/yyyy') #"
+                    },
+                    {
+                        field: "PurchaseOrderNo",stickable: true, title: "Purchase OrderNo", width: 170
+                    },
+
+
+
+                ]
+            });
+        }
+        var GridData = [];
+        function SendToAccounts(Id) {
+
+            var obj = {};
+            var updateddata = "";
+            if ($('#selectVal_' + Id).is(':checked')) {
+                obj.Id = Id;
+                GridData.push(obj);
+            }
+            else {
+                obj.Id = Id;
+                GridData.pop(obj);
+            }
+
+        }
+        function Send() {
+            showLoadingIcon();
+            var saveData = {};
+            saveData.BillingInfo = GridData;
+            saveData.SendTo = $("#ddlUserName").data("kendoComboBox").value();
+            if (GridData.length<=0) {
+                Swal.fire('Please select Billing Info', '', 'warning');
+                return;
+            }
+            var role = $("#hiddenrole").html();
+            if (role == "Entry Section") {
+                for (var i = 0; i < GridData.length; i++) {
+                    var FilterData = _.filter(BillingRegisterData, function (e) { return e.Id == GridData[i].Id });
+                    if (FilterData[0].InvoiceNo == "" && FilterData[0].Status != "Pending") {
+                        Swal.fire('Please Invoice first then send other section', '', 'warning');
+                        return;
+                    }
+                }
+            }
+            else {
+                for (var i = 0; i < GridData.length; i++) {
+                    var FilterData = _.filter(BillingRegisterData, function (e) { return e.Id == GridData[i].Id });
+                    if (FilterData[0].InvoiceNo == "" || FilterData[0].InvoiceNo ==null) {
+                        Swal.fire('Please Invoice first then send other section', '', 'warning');
+                        return;
+                    }
+                }
+            }
+
+            if (saveData.SendTo=="") {
+                Swal.fire('Please select Responsible Person', '', 'warning');
+                return;
+            }
+            else {
+                var postData = JSON.stringify(saveData);
+                $.ajax({
+                    type: "POST",
+                    /*url: '/BillingRegisterList/PostData',*/
+                    url: '@Url.Action("PostData", "BillingRegisterList")',
+                    data: postData,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        var result = JSON.parse(data);
+                        if (result.StatusCode == "1") {
+                            Swal.close();
+                            Swal.fire(result.StatusMessage, '', 'success').then(function () { location.reload(); });  //.then(function () { location.reload(); });
+                        }
+                        else {
+                            Swal.fire('Error while Save data', '', 'warning');
+                        }
+                    },
+                    error: function (data) {
+                        Swal.fire('Error while Save data', '', 'warning');
+                    }
+                });
+            }
+        }
+        function Invoice() {
+            showLoadingIcon();
+            var saveData = {};
+            saveData.Invoice = $("#InvoiceNo").val();
+            if (Invoice == "") {
+                Swal.fire('Please Enter Invoice Number', '', 'warning');
+                return;
+            }
+            if (GridData.length <= 0) {
+                Swal.fire('Please select Billing Info', '', 'warning');
+                return;
+            }
+            if (GridData.length>=2) {
+                Swal.fire('Please select only one Billing Info for Invoice', '', 'warning');
+                return;
+            }
+            if (saveData.Invoice == "") {
+                Swal.fire('Please Enter Invoice Number', '', 'warning');
+                return;
+            }
+            else {
+                var EntryId = GridData[0].Id;
+                var filter = _.filter(BillingRegisterData, function (e) { return e.Id == EntryId });
+                var Invoice = filter[0].InvoiceNo;
+                saveData.Id = EntryId;
+                var postData = JSON.stringify(saveData);
+                $.ajax({
+                    type: "POST",
+                    /*url: '/BillingRegisterList/InvoicePost',*/
+                    url: '@Url.Action("InvoicePost", "BillingRegisterList")',
+                    data: postData,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        var result = JSON.parse(data);
+                        if (result.StatusCode == "1") {
+                            Swal.close();
+                            Swal.fire(result.StatusMessage, '', 'success').then(function () { location.reload(); });  //.then(function () { location.reload(); });
+                        }
+                        else {
+
+                            Swal.fire(result.StatusMessage, '', 'warning').then(function () { location.reload(); });
+
+                        }
+                    },
+                    error: function (data) {
+                        Swal.fire('Error while Save data', '', 'warning');
+                    }
+                });
+            }
+        }
+        function Complete() {
+            var saveData = {};
+            saveData.BillingInfo = GridData;
+            saveData.PaymentAmount = $("#paymentAmount").val();
+            //if (GridData.length>0) {
+            //    for (var i = 0; i < GridData.length; i++) {
+            //        var FilterData = _.filter(BillingRegisterData, function (e) { return e.Id == GridData[i].Id });
+            //        if (FilterData[0].Status == "Payment Complete") {
+            //            Swal.fire('Bill Process All Ready Complete', '', 'warning');
+            //            return;
+            //        }
+            //    }
+            //}
+            if (GridData.length <= 0) {
+                Swal.fire('Please select Billing Info', '', 'warning');
+                return;
+            }
+            if (GridData.PaymentAmount=="") {
+                Swal.fire('Please enter payment amount', '', 'warning');
+                return;
+            }
+            if (GridData.length>2) {
+                Swal.fire('Please select only one Billing Info', '', 'warning');
+                return;
+            }
+
+            else {
+                var postData = JSON.stringify(saveData);
+                $.ajax({
+                    type: "POST",
+                    /*url: '/BillingRegisterList/PostData',*/
+                    url: '@Url.Action("PostData", "BillingRegisterList")',
+                    data: postData,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        var result = JSON.parse(data);
+                        if (result.StatusCode == "1") {
+                            Swal.fire(result.StatusMessage, '', 'success').then(function () { location.reload(); });  //.then(function () { location.reload(); });
+                        }
+                        else {
+                            Swal.fire(result.StatusMessage, '', 'warning');
+                        }
+                    },
+                    error: function (data) {
+                        Swal.fire('Error while Save data', '', 'warning');
+                    }
+                });
+            }
+        }
+        function Return(Id,val) {
+            var saveData = {};
+            saveData.Id = Id;
+            saveData.RecorRe = val;
+            var FilterData = _.filter(BillingRegisterData, function (e) { return e.Id == Id });
+            if ((FilterData[0].Status == "Receive Section" || FilterData[0].Status == "Received") && FilterData[0].InvoiceNo == null) {
+                    var postData = JSON.stringify(saveData);
+                    $.ajax({
+                        type: "POST",
+                        /*url: '/BillingRegisterList/ReturnData',*/
+                        url: '@Url.Action("ReturnData", "BillingRegisterList")',
+                        data: postData,
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+                            var result = JSON.parse(data);
+                            if (result.StatusCode == "1") {
+                                Swal.fire(result.StatusMessage, '', 'success').then(function () { location.reload() });  //.then(function () { location.reload(); });
+                            }
+                            else {
+                                Swal.fire(result.StatusMessage, '', 'warning');
+                            }
+                        },
+                        error: function (data) {
+                            Swal.fire('Something went wrong while return bill', '', 'warning');
+                        }
+                    });
+
+
+            }
+            else {
+                Swal.fire('You have no permission or already invoiced this bill', '', 'warning');
+                return;
+            }
+
+        }
+        function TransactionDetails(Id) {
+            /*var url = '/BillTransaction/CreateBillTransaction?Id=' + Id;*/
+            var url = '@Url.Action("CreateBillTransaction", "BillTransaction")?Id=' + Id;
+            window.open(url, '_blank');
+        }
+        function showLoadingIcon() {
+            Swal.fire({
+                title: 'Please wait for confirmation...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                html: '<div class="spinner"></div>',
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        }
+    </script>
+}
+
+

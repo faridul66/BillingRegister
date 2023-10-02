@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>BJ Production</title>
+    <title>Billing Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -18,9 +18,9 @@
     <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
     <link href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css " rel="stylesheet">
     <link href=" https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2023.1.117/styles/kendo.default-main.min.css">
     <link href="~/Content/Toastr/toastr.min.css" rel="stylesheet" />
-    <style>
+    <style type="text/css">
         .logo-src {
             background-size: 90% !important;
             background-repeat: no-repeat !important;
@@ -28,6 +28,7 @@
             width: 80px !important
         }
     </style>
+    <link href="~/Content/Ping.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -49,6 +50,19 @@
                     </div>
                 </div>
             </div>
+            <div class="PingContainer">
+                <div id="Signal" class="signal-bars sizing-box">
+                    <div class="first-bar bar"></div>
+                    <div class="second-bar bar"></div>
+                    <div class="third-bar bar"></div>
+                    <div class="fourth-bar bar"></div>
+                    <div class="fifth-bar bar"></div>
+                </div>
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+    <div id="Ping"></div>}
+
+            </div>
             <div class="app-header__mobile-menu">
                 <div>
                     <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
@@ -69,12 +83,12 @@
             </div>
             <div class="app-header__content">
                 <div class="app-header-right">
-                    
+
                     <div class="header-dots">
-                        
+
                     </div>
-                    
-                    
+
+
 
                     <div class="header-btn-lg pr-0">
                         <div class="widget-content p-0">
@@ -112,8 +126,7 @@
                                                                     {
                                                                         using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                                                                         {
-                                                                            @Html.AntiForgeryToken()
-                                                                        }
+                                                        @Html.AntiForgeryToken()}
                                                                     }
                                                                 </div>
                                                             </div>
@@ -190,78 +203,59 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                                    <li>@Html.ActionLink("Purchase", "Index", "Purchase_Order")</li>
-                                    <li>@Html.ActionLink("Sales", "Index", "Sales_Order")</li>
-                                    <li>@Html.ActionLink("Production Indent", "Index", "Production_Indent")</li>
-                                    <li>@Html.ActionLink("Transfer", "Index", "Transfer_Order")</li>
+
+
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="metismenu-icon pe-7s-rocket"></i> Billing Register
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @if (Request.IsAuthenticated && User.IsInRole("Entry Section"))
+                                    {
+                                        <li>@Html.ActionLink("Billing Register", "Create", "BillingEntry")</li>
+                                    }
+                                    <li>@Html.ActionLink("Billing List", "CreateBillingRegisterList", "BillingRegisterList")</li>
+                                    <li>@Html.ActionLink("Billing Report", "CreateBillingInfoReport", "BillingInfoReport")</li>
 
                                 </ul>
                             </li>
 
                             @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                             {
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="metismenu-icon pe-7s-diamond"></i> Admin
+                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                            </a>
+                            <ul class="treeview-menu">
                                 <li class="treeview">
+
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i> Admin
+                                        <i class="metismenu-icon"></i> User Management
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
                                     <ul class="treeview-menu">
-                                        <li class="treeview">
-
-                                            <a href="#">
-                                                <i class="metismenu-icon"></i> User Management
-                                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                            </a>
-                                            <ul class="treeview-menu">
-                                                <li>@Html.ActionLink("Users", "Index", "Users")</li>
-                                                <li>@Html.ActionLink("Groups", "Index", "Groups")</li>
-                                                <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
-                                            </ul>
-                                        </li>
-                                        <li class="treeview">
-                                            <a href="#">
-                                                <i class="metismenu-icon"></i> Master Data
-                                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                            </a>
-                                            <ul class="treeview-menu">
-                                                <li> @Html.ActionLink("Companies", "Index", "Companies")</li>
-                                                <li> @Html.ActionLink("Location_Type", "Index", "Location_Type")</li>
-                                                <li> @Html.ActionLink("Locations", "Index", "Locations")</li>
-                                                <li> @Html.ActionLink("Customers", "Index", "Customers")</li>
-                                                <li> @Html.ActionLink("Vendors", "Index", "Vendors")</li>
-                                                <li> @Html.ActionLink("Machine_Type", "Index", "Machine_Type")</li>
-                                                <li> @Html.ActionLink("Machines", "Index", "Machines")</li>
-                                                <li> @Html.ActionLink("Product_Type", "Index", "Product_Type")</li>
-                                                <li> @Html.ActionLink("Products", "Index", "Products")</li>
-                                                <li> @Html.ActionLink("Feature_Type", "Index", "Feature_Type")</li>
-                                                <li> @Html.ActionLink("Features", "Index", "Features")</li>
-                                                <li> @Html.ActionLink("Unit_Measurement", "Index", "Unit_Measurement")</li>
-                                                <li> @Html.ActionLink("Product_Feature", "Index", "Product_Feature")</li>
-
-                                                <li>
-                                                    <a href="#l">
-                                                        <i class="metismenu-icon">
-                                                        </i>Sites
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="metismenu-icon">
-                                                        </i>Machines
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="metismenu-icon">
-                                                        </i>Items
-                                                    </a>
-                                                </li>
-                                            </ul>
-
-                                        </li>
+                                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                                        <li>@Html.ActionLink("Groups", "Index", "Groups")</li>
+                                        <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
                                     </ul>
                                 </li>
-                            }
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="metismenu-icon"></i> Master Data
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li> @Html.ActionLink("Companies", "Index", "Companies")</li>
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </li>
+}
 
 
 
@@ -462,16 +456,18 @@
 
     <!--Tables Init-->
     @*<script src="~/Content/Theme/assets/js/scripts-init/tables.js"></script>*@
-<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap4.min.js"></script>
     <!--Date Time Picker-->
     <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay/dist/loadingoverlay.min.js"></script>
     <script src="~/Scripts/jquery.number.min.js"></script>
 
-
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.617/styles/kendo.default.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2020.2.617/js/kendo.all.min.js"></script>
     <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
+        moveElements();
             var url = window.location;
             // for sidebar menu entirely but not cover treeview
             $('ul.vertical-nav-menu a').filter(function () {
@@ -488,11 +484,59 @@
                 return this.href == url;
             }).parentsUntil(".vertical-nav-menu > .treeview-menu").addClass('mm-active');
             //$('[data-toggle="tooltip"]').tooltip();
+            getPing();
         });
-                                                                                                                                        //$(".dropdown-toggle").click(function () {
-                                                                                                                                        //    $('[data-toggle="tooltip"], .tooltip').tooltip("hide");
-                                                                                                                                        //});
 
+
+            function getPing () {
+            var startTime = performance.now();
+            $.ajax({
+                url: '@Url.Action("Ping", "Home")',
+                type: 'GET',
+                success: function (data) {
+                    var endTime = performance.now();
+                    var pingTime = endTime - startTime;
+                    var element = $('#Signal');
+                    element.removeClass('good bad ok one-bar two-bars three-bars four-bars five-bars no');
+                    if (pingTime < 30) {
+                        element.addClass('good five-bars');
+                    } else if (pingTime >= 30 && pingTime <= 60) {
+                        element.addClass('good four-bars');
+                    } else if (pingTime >= 61 && pingTime <= 100) {
+                        element.addClass('ok three-bars');
+                    } else if (pingTime >= 101 && pingTime <= 200) {
+                        element.addClass('ok two-bars');
+                    } else if (pingTime >= 201 && pingTime <= 500) {
+                        element.addClass('bad one-bar');
+                  }
+                    else {
+                        element.addClass('no');
+                    }
+                    $('#Ping').text(parseInt(pingTime) + ' ms');
+                }
+            });
+        };
+
+
+        function updateClock() {
+            getPing();
+        }
+
+        setInterval(updateClock, 200000);//$(".dropdown-toggle").click(function () {
+                                                                                                                                        //    $('[data-toggle="tooltip"], .tooltip').tooltip("hide");
+                                                                                                                //});
+
+    function moveElements() {
+        if ($(window).width() > 992) {
+            $('.PingContainer').children().appendTo('.header-dots');
+        } else {
+            $('.header-dots').children().appendTo('.PingContainer');
+        }
+    }
+
+    $(window).resize(function () {
+        moveElements();
+    });
     </script>
 
 

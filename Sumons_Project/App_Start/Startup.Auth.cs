@@ -2,11 +2,11 @@
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using BJProduction.Models;
+using BillingRegister.Models;
 using Owin;
 using System;
 
-namespace BJProduction
+namespace BillingRegister
 {
     public partial class Startup
     {

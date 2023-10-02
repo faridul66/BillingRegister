@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace BJProduction
+namespace BillingRegister
 {
     public class BundleConfig
     {

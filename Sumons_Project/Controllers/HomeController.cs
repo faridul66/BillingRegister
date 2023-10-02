@@ -1,4 +1,4 @@
-﻿using BJProduction.Models;
+﻿using BillingRegister.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Web;
@@ -11,7 +11,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Threading;
 
-namespace BJProduction.Controllers
+namespace BillingRegister.Controllers
 {[Authorize]
     public class HomeController : Controller
     {
@@ -110,37 +110,11 @@ namespace BJProduction.Controllers
         }
 
 
-
-        public JsonResult GetCompany()
-        {
-            return Json(db.Companies, JsonRequestBehavior.AllowGet);
-        }
-
         [Authorize]
-        public JsonResult GetSite(int id)
+        public ActionResult Ping()
         {
-            return Json(db.Company_Location.Join(db.Locations, a => a.Locationid, b => b.id, (a, b) => new { Locations = b, Company_Location = a }).Where(x => x.Company_Location.CompanyId == id).Join(db.Locations, a => a.Locations.parent_location, b => b.id, (a, b) => new { Locations = b }), JsonRequestBehavior.AllowGet);
+            return Json(new { message = "Magic! Magic! Magic! :P" }, JsonRequestBehavior.AllowGet);
         }
-
-        public JsonResult GetMachine(int[] id)
-        {
-            var companyId = id[0];
-            var siteId = id[1];
-            var machines = db.Machines.Where(x => x.Companyid == companyId && x.Locationid==siteId);
-            return Json(machines, JsonRequestBehavior.AllowGet);
-        }
-
-
-        public JsonResult GetProductId(int id)
-        {
-            return Json(db.Machine_Product.Include(x=>x.Machine).Include(x=>x.Product_Type).Where(x=>x.Machineid==id).Select(x=>x.Product_Type), JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetShiftHour(int id)
-        {
-            return Json(db.Shifts.FirstOrDefault(x=>x.id==id).duration, JsonRequestBehavior.AllowGet);
-        }
-
 
     }
 }

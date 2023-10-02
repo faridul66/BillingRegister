@@ -1,6 +1,6 @@
 ﻿using Owin;
 
-namespace BJProduction
+namespace BillingRegister
 {
     public partial class Startup
     {

@@ -38682,11 +38682,13 @@ span.multiselect-native-select {
     padding-left: 12px
 }
 
-@media only screen and (max-width:1320px) {
+/*Disabled by SMN*/
+/*@media only screen and (max-width:1320px) {
     .header-user-info {
         display: none
     }
-}
+}*/
+
 
 @media (max-width:991.98px) {
     .app-main {
@@ -38913,6 +38915,7 @@ span.multiselect-native-select {
     .page-title-head {
         display: block
     }
+
 }
 
 @media (max-width:991.98px) {

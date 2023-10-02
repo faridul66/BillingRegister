@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace BJProduction
+namespace BillingRegister
 {
     public class RouteConfig
     {

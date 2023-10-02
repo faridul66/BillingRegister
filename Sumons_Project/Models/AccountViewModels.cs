@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-namespace BJProduction.Models
+namespace BillingRegister.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

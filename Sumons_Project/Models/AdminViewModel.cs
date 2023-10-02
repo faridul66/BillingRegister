@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 using System.Web.Mvc;
 
-namespace BJProduction.Models
+namespace BillingRegister.Models
 {
     public class RoleViewModel
     {
