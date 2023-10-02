@@ -7,6 +7,7 @@ namespace BillingRegister.Models
 {
     public class CommonVM
     {
+        public int Id1 { get; set; }
         public int Id { get; set; }
         public string StatusCode { get; set; }
         public string StatusMessage { get; set; }
